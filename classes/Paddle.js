@@ -13,7 +13,7 @@ export default class Paddle extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true);
 
     this.setMaxVelocity(0, 350);
-    this.setDrag(400);
+    this.setDrag(1000);
     this.setBounce(1, 1);
 
     // Track the arrow keys & OPQA
