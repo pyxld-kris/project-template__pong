@@ -1,19 +1,27 @@
 import Phaser from "phaser";
-import PlayScene from "../scenes/PlayScene.js";
+import LoadingScene from "/scenes/LoadingScene.js";
+import TitleScene from "/scenes/TitleScene.js";
+import PlayScene from "/scenes/PlayScene.js";
+import UIScene from "/scenes/UIScene.js";
+import CreditsScene from "/scenes/CreditsScene.js";
 
-export const config = {
+export var config = {
   type: Phaser.AUTO,
-  width: 500,
-  height: 300,
   parent: "game-container",
   pixelArt: true,
-  zoom: 0.75,
+  zoom: 1,
   backgroundColor: "#000000",
-  scene: PlayScene,
+  scene: [LoadingScene, TitleScene, PlayScene, UIScene, CreditsScene],
   physics: {
     default: "arcade",
     arcade: {
       gravity: { x: 0, y: 0 }
     }
+  },
+  scale: {
+    parent: "game-container",
+    mode: Phaser.Scale.FIT,
+    width: 500 / 2,
+    height: 300 / 2
   }
 };

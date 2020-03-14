@@ -8,18 +8,22 @@ export default class PlayScene extends Phaser.Scene {
     super("PlayScene");
   }
 
-  preload() {}
-
   create() {
+    // Start UIScene, which will layer on top of PlayScene
+    this.scene.run("UIScene");
+
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
 
-    this.ball = new Ball(this, 100, 100);
+    // Create background
+    this.background = this.add.sprite(0, 0, "background").setOrigin(0, 0);
+
+    this.ball = new Ball(this, 40, 40);
     this.ball.setCollideWorldBounds(true);
 
     // Left paddle
-    this.leftPaddle = new Paddle(this, 30, this.game.config.height / 2, 20, 80);
+    this.leftPaddle = new Paddle(this, 30, this.game.config.height / 2, 10, 40);
     //this.physics.add.collider(this.ball, this.leftPaddle);
 
     // Right paddle
@@ -27,8 +31,8 @@ export default class PlayScene extends Phaser.Scene {
       this,
       this.game.config.width - 30,
       this.game.config.height / 2,
-      20,
-      80
+      10,
+      40
     );
     //this.physics.add.collider(this.ball, this.rightPaddle);
 
@@ -50,36 +54,4 @@ export default class PlayScene extends Phaser.Scene {
     this.leftPaddle.update(time, delta);
     this.rightPaddle.update(time, delta);
   }
-
-  /* <Begin> helper functions added by Kris */
-  //
-  //
-
-  generateRectangleSprite(width, height) {
-    // Returns key of generated sprite object
-    let spriteKey = "rectangle-sprite-" + width + "x" + height;
-
-    var graphics = this.add
-      .graphics()
-      .fillStyle(0xffffff)
-      .fillRect(0, 0, width, height)
-      .generateTexture(spriteKey, width, height);
-    graphics.destroy();
-
-    return spriteKey;
-  }
-  generateSquareSprite(width) {
-    // Returns key of generated sprite object
-    return this.generateRectangleSprite(width, width);
-  }
-
-  addPhysicalRectangle(x, y, width, height, color, alphaIThinkMaybe) {
-    // TODO: alphaIThinkMaybe name change
-    let rect = this.add.rectangle(x, y, width, height, color, alphaIThinkMaybe);
-    rect = this.physics.add.existing(rect, true);
-
-    return rect;
-  }
-
-  /* </End> Helper functions added by kris */
 }

@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 export default class Paddle extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, width, height) {
-    super(scene, x, y, scene.generateRectangleSprite(width, height));
+    super(scene, x, y, "paddle");
     this.scene = scene;
 
     // Add to rendering engine
@@ -12,7 +12,7 @@ export default class Paddle extends Phaser.Physics.Arcade.Sprite {
 
     this.setCollideWorldBounds(true);
 
-    this.setMaxVelocity(0, 350);
+    this.setMaxVelocity(0, 200);
     this.setDrag(1000);
     this.setBounce(1, 1);
 
@@ -22,31 +22,29 @@ export default class Paddle extends Phaser.Physics.Arcade.Sprite {
       RIGHT,
       UP,
       DOWN,
-      Q,
-      O,
-      P,
-      A
+      W,
+      A,
+      S,
+      D
     } = Phaser.Input.Keyboard.KeyCodes;
     this.keys = scene.input.keyboard.addKeys({
       left: LEFT,
       right: RIGHT,
       up: UP,
       down: DOWN,
-      q: Q,
-      o: O,
-      p: P,
-      a: A
+      w: W,
+      a: A,
+      s: S,
+      d: D
     });
-
-    console.log("MAKING PADDLE");
   }
 
   update() {
     const keys = this.keys;
 
-    if (keys.up.isDown) {
+    if (keys.up.isDown || keys.w.isDown) {
       this.setVelocity(0, -300);
-    } else if (keys.down.isDown) {
+    } else if (keys.down.isDown || keys.s.isDown) {
       this.setVelocity(0, 300);
     }
 
